@@ -1,0 +1,840 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ColdBug">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Linux多线程线程概述（PPT）线程和进程是类似的，也是去完成并发任务，一般线程会处理相同的任务。 线程是轻量级的进程，线程之间共享数据很方便。 进程的代价是比较高的，尽管使用了写时复制的技术，但是仍然需要复制多种表。 创建线程1234567891011121314151617一般情况下,main函数所在的线程我们称之为主线程（main线程），其余创建的线程称之为子线程。程序中默认只有一个进程，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux多线程">
+<meta property="og:url" content="https://cant-read.github.io/2023/06/03/Linux%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:site_name" content="ColdBug的博客">
+<meta property="og:description" content="Linux多线程线程概述（PPT）线程和进程是类似的，也是去完成并发任务，一般线程会处理相同的任务。 线程是轻量级的进程，线程之间共享数据很方便。 进程的代价是比较高的，尽管使用了写时复制的技术，但是仍然需要复制多种表。 创建线程1234567891011121314151617一般情况下,main函数所在的线程我们称之为主线程（main线程），其余创建的线程称之为子线程。程序中默认只有一个进程，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-06-03T13:02:53.606Z">
+<meta property="article:modified_time" content="2023-06-03T13:09:57.441Z">
+<meta property="article:author" content="ColdBug">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Linux多线程 - ColdBug的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"cant-read.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Linux多线程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-03 21:02" pubdate>
+          2023年6月3日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          97 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Linux多线程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Linux多线程"><a href="#Linux多线程" class="headerlink" title="Linux多线程"></a>Linux多线程</h1><h2 id="线程概述（PPT）"><a href="#线程概述（PPT）" class="headerlink" title="线程概述（PPT）"></a>线程概述（PPT）</h2><p>线程和进程是类似的，也是去完成并发任务，一般线程会处理相同的任务。</p>
+<p>线程是轻量级的进程，线程之间共享数据很方便。</p>
+<p>进程的代价是比较高的，尽管使用了写时复制的技术，但是仍然需要复制多种表。</p>
+<h2 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs C">一般情况下,main函数所在的线程我们称之为主线程（main线程），其余创建的线程<br>称之为子线程。<br>程序中默认只有一个进程，fork()函数调用，<span class="hljs-number">2</span>进行<br>程序中默认只有一个线程，pthread_create()函数调用，<span class="hljs-number">2</span>个线程。<br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">pthread_create</span><span class="hljs-params">(<span class="hljs-type">pthread_t</span> *thread, <span class="hljs-type">const</span> <span class="hljs-type">pthread_attr_t</span> *attr, <span class="hljs-type">void</span> *(*start_routine) (<span class="hljs-type">void</span> *), <span class="hljs-type">void</span> *arg)</span>;<br>    - 功能：创建一个子线程<br>    - 参数：<br>        - thread：传出参数，线程创建成功后，子线程的线程ID被写到该变量中。<br>        - attr : 设置线程的属性，一般使用默认值，<span class="hljs-literal">NULL</span><br>        - start_routine : 函数指针，这个函数是子线程需要处理的逻辑代码<br>        - arg : 给第三个参数使用，传参<br>    - 返回值：<br>        成功：<span class="hljs-number">0</span><br>        失败：返回错误号。这个错误号和之前errno不太一样。<br>        获取错误号的信息：  <span class="hljs-type">char</span> * <span class="hljs-title function_">strerror</span><span class="hljs-params">(<span class="hljs-type">int</span> errnum)</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><br><span class="hljs-type">void</span> *<span class="hljs-title function_">callback</span><span class="hljs-params">(<span class="hljs-type">void</span> *arg)</span><br>&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello World!\n&quot;</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;arg: %s\n&quot;</span>, (<span class="hljs-type">char</span>*)arg);<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">pthread_t</span> tid;<br>    <span class="hljs-type">char</span>* arg = <span class="hljs-string">&quot;i am arg!&quot;</span>;<br>    <span class="hljs-type">int</span> ret = pthread_create(&amp;tid, <span class="hljs-literal">NULL</span>, callback, arg);<br>    <span class="hljs-keyword">if</span> (ret != <span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-type">char</span> *errstr = strerror(ret);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pthread_create error: %s\n&quot;</span>, errstr);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;main thread: %d\n&quot;</span>, i);<br>        sleep(<span class="hljs-number">1</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在编译这个代码的时候，需要加 -l pthread</p>
+<p>如果不将主线程sleep，子线程可能抢占不到CPU，就直接结束了。</p>
+<h2 id="终止线程"><a href="#终止线程" class="headerlink" title="终止线程"></a>终止线程</h2><p><code>void pthread_exit(void *retval);</code></p>
+<ul>
+<li>功能：终止一个线程，在哪个线程中调用，就表示终止哪个线程</li>
+<li>参数：<ul>
+<li>retval ：需要传递一个指针，作为一个返回值，可以在pthread_join()中获取到。</li>
+</ul>
+</li>
+</ul>
+<p> <code>pthread_t pthread_self(void);</code></p>
+<ul>
+<li>功能：获取当前的线程的线程ID</li>
+</ul>
+<p><code>int pthread_equal(pthread_t t1, pthread_t t2);</code></p>
+<ul>
+<li>功能：比较两个线程ID是否相等</li>
+<li>不同的操作系统，pthread_t类型的实现不一样，有的是无符号的长整型，有的是使用结构体去实现的。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-type">void</span> * <span class="hljs-title function_">callback</span><span class="hljs-params">(<span class="hljs-type">void</span> * arg)</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;child thread id : %ld\n&quot;</span>, pthread_self());<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;    <span class="hljs-comment">// pthread_exit(NULL);</span><br>&#125; <br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 创建一个子线程</span><br>    <span class="hljs-type">pthread_t</span> tid;<br>    <span class="hljs-type">int</span> ret = pthread_create(&amp;tid, <span class="hljs-literal">NULL</span>, callback, <span class="hljs-literal">NULL</span>);<br>    <span class="hljs-keyword">if</span>(ret != <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-type">char</span> * errstr = strerror(ret);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error : %s\n&quot;</span>, errstr);<br>    &#125;<br>    <span class="hljs-comment">// 主线程</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, i);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;tid : %ld, main thread id : %ld\n&quot;</span>, tid ,pthread_self());<br>    <span class="hljs-comment">// 让主线程退出,当主线程退出时，不会影响其他正常运行的线程。</span><br>    pthread_exit(<span class="hljs-literal">NULL</span>);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;main thread exit\n&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;   <span class="hljs-comment">// exit(0);</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="连接已经终止的线程"><a href="#连接已经终止的线程" class="headerlink" title="连接已经终止的线程"></a>连接已经终止的线程</h2><p><code>int pthread_join(pthread_t thread, void **retval);</code></p>
+<ul>
+<li><p>功能：和一个已经终止的线程进行连接</p>
+<ul>
+<li><p>回收子线程的资源</p>
+</li>
+<li><p>这个函数是阻塞函数，调用一次只能回收一个子线程</p>
+</li>
+<li><p>一般在主线程中使用</p>
+</li>
+</ul>
+</li>
+<li><p>参数：</p>
+<ul>
+<li>thread：需要回收的子线程的ID</li>
+<li>retval: 接收子线程退出时的返回值</li>
+</ul>
+</li>
+<li><p>返回值：</p>
+<ul>
+<li>0 : 成功</li>
+<li>非0 : 失败，返回的错误号</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><br><span class="hljs-type">int</span> value = <span class="hljs-number">10</span>;<br><span class="hljs-type">void</span> * <span class="hljs-title function_">callback</span><span class="hljs-params">(<span class="hljs-type">void</span> * arg)</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;child thread id : %ld\n&quot;</span>, pthread_self());<br>    <span class="hljs-comment">// sleep(3);</span><br>    <span class="hljs-comment">// return NULL; </span><br>    <span class="hljs-comment">// int value = 10; // 局部变量</span><br>    pthread_exit((<span class="hljs-type">void</span> *)&amp;value);   <span class="hljs-comment">// return (void *)&amp;value;</span><br>&#125; <br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 创建一个子线程</span><br>    <span class="hljs-type">pthread_t</span> tid;<br>    <span class="hljs-type">int</span> ret = pthread_create(&amp;tid, <span class="hljs-literal">NULL</span>, callback, <span class="hljs-literal">NULL</span>);<br>    <span class="hljs-keyword">if</span>(ret != <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-type">char</span> * errstr = strerror(ret);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error : %s\n&quot;</span>, errstr);<br>    &#125;<br>    <span class="hljs-comment">// 主线程</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, i);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;tid : %ld, main thread id : %ld\n&quot;</span>, tid ,pthread_self());<br>    <span class="hljs-comment">// 主线程调用pthread_join()回收子线程的资源</span><br>    <span class="hljs-type">int</span> * thread_retval;<br>    ret = pthread_join(tid, (<span class="hljs-type">void</span> **)&amp;thread_retval);<br>    <span class="hljs-keyword">if</span>(ret != <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-type">char</span> * errstr = strerror(ret);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error : %s\n&quot;</span>, errstr);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;exit data : %d\n&quot;</span>, *thread_retval);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;回收子线程资源成功！\n&quot;</span>);<br>    <span class="hljs-comment">// 让主线程退出,当主线程退出时，不会影响其他正常运行的线程。</span><br>    pthread_exit(<span class="hljs-literal">NULL</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>当子线程的局部变量通过pthread_exit传出的时候，在主线程中接收到的是错误的值。因为子线程推出后，局部变量的<strong>栈空间</strong>会被编译器清空。所以不能使用这样的方式进行传参。应该传全局变量。</p>
+<h2 id="线程分离"><a href="#线程分离" class="headerlink" title="线程分离"></a>线程分离</h2><p><code>int pthread_detach(pthread_t thread);</code></p>
+<ul>
+<li>功能：分离一个线程。<ul>
+<li><p>被分离的线程在终止的时候，会自动释放资源返回给系统。</p>
+</li>
+<li><p>不能多次分离，会产生不可预料的行为。</p>
+</li>
+<li><p>不能去连接一个已经分离的线程，会报错。</p>
+</li>
+<li><p>参数：需要分离的线程的ID</p>
+</li>
+<li><p>返回值：</p>
+<ul>
+<li>成功：0</li>
+<li>失败：返回错误号</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="线程取消"><a href="#线程取消" class="headerlink" title="线程取消"></a>线程取消</h2><p><code>int pthread_cancel(pthread_t thread);</code></p>
+<ul>
+<li>功能：取消线程（让线程终止）<ul>
+<li>取消某个线程，可以终止某个线程的运行，</li>
+<li>但是并不是立马终止，而是当子线程执行到一个取消点，线程才会终止。</li>
+<li>取消点：系统规定好的一些系统调用，我们可以粗略的理解为从用户区到内核区的切换，这个位置称之为取消点。</li>
+</ul>
+</li>
+</ul>
+<h2 id="线程属性"><a href="#线程属性" class="headerlink" title="线程属性"></a>线程属性</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">/*</span><br><span class="hljs-comment">    int pthread_attr_init(pthread_attr_t *attr);</span><br><span class="hljs-comment">        - 初始化线程属性变量</span><br><span class="hljs-comment">    int pthread_attr_destroy(pthread_attr_t *attr);</span><br><span class="hljs-comment">        - 释放线程属性的资源</span><br><span class="hljs-comment">    int pthread_attr_getdetachstate(const pthread_attr_t *attr, int *detachstate);</span><br><span class="hljs-comment">        - 获取线程分离的状态属性</span><br><span class="hljs-comment">    int pthread_attr_setdetachstate(pthread_attr_t *attr, int detachstate);</span><br><span class="hljs-comment">        - 设置线程分离的状态属性</span><br><span class="hljs-comment">*/</span>     <br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-type">void</span> * <span class="hljs-title function_">callback</span><span class="hljs-params">(<span class="hljs-type">void</span> * arg)</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;chid thread id : %ld\n&quot;</span>, pthread_self());<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 创建一个线程属性变量</span><br>    <span class="hljs-type">pthread_attr_t</span> attr;<br>    <span class="hljs-comment">// 初始化属性变量</span><br>    pthread_attr_init(&amp;attr);<br>    <span class="hljs-comment">// 设置属性</span><br>    pthread_attr_setdetachstate(&amp;attr, PTHREAD_CREATE_DETACHED);<br>    <span class="hljs-comment">// 创建一个子线程</span><br>    <span class="hljs-type">pthread_t</span> tid;<br>    <span class="hljs-type">int</span> ret = pthread_create(&amp;tid, &amp;attr, callback, <span class="hljs-literal">NULL</span>);<br>    <span class="hljs-keyword">if</span>(ret != <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-type">char</span> * errstr = strerror(ret);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error1 : %s\n&quot;</span>, errstr);<br>    &#125;<br>    <span class="hljs-comment">// 获取线程的栈的大小</span><br>    <span class="hljs-type">size_t</span> size;<br>    pthread_attr_getstacksize(&amp;attr, &amp;size);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;thread stack size : %ld\n&quot;</span>, size);<br>    <span class="hljs-comment">// 输出主线程和子线程的id</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;tid : %ld, main thread id : %ld\n&quot;</span>, tid, pthread_self());<br>    <span class="hljs-comment">// 释放线程属性资源</span><br>    pthread_attr_destroy(&amp;attr);<br>    pthread_exit(<span class="hljs-literal">NULL</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="线程同步（PPT）"><a href="#线程同步（PPT）" class="headerlink" title="线程同步（PPT）"></a>线程同步（PPT）</h2><h2 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h2><p>互斥量的类型 pthread_mutex_t</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> <span class="hljs-title function_">pthread_mutex_init</span><span class="hljs-params">(<span class="hljs-type">pthread_mutex_t</span> *<span class="hljs-keyword">restrict</span> mutex, <span class="hljs-type">const</span> <span class="hljs-type">pthread_mutexattr_t</span> *<span class="hljs-keyword">restrict</span> attr)</span>;<br></code></pre></td></tr></table></figure>
+
+<p>初始化互斥量</p>
+<ul>
+<li><p>参数</p>
+<ul>
+<li><p>mutex ： 需要初始化的互斥量变量</p>
+</li>
+<li><p>attr ： 互斥量相关的属性，NULL<br>- restrict : C语言的修饰符，被修饰的指针，不能由另外的一个指针进行操作。<br>pthread_mutex_t *restrict mutex &#x3D; xxx;<br>pthread_mutex_t * mutex1 &#x3D; mutex;</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><code>int pthread_mutex_destroy(pthread_mutex_t *mutex);</code></p>
+<p>释放互斥量的资源</p>
+<p><code>int pthread_mutex_lock(pthread_mutex_t *mutex);</code></p>
+<p>加锁，阻塞的，如果有一个线程加锁了，那么其他的线程只能阻塞等待</p>
+<p><code>int pthread_mutex_trylock(pthread_mutex_t *mutex);</code></p>
+<p>尝试加锁，如果加锁失败，不会阻塞，会直接返回。</p>
+<p><code>int pthread_mutex_unlock(pthread_mutex_t *mutex);</code></p>
+<p>解锁</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-comment">// 全局变量，所有的线程都共享这一份资源。</span><br><span class="hljs-type">int</span> tickets = <span class="hljs-number">1000</span>;<br><span class="hljs-comment">// 创建一个互斥量</span><br><span class="hljs-type">pthread_mutex_t</span> mutex;<br><span class="hljs-type">void</span> * <span class="hljs-title function_">sellticket</span><span class="hljs-params">(<span class="hljs-type">void</span> * arg)</span> &#123;<br>    <span class="hljs-comment">// 卖票</span><br>    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 加锁</span><br>        pthread_mutex_lock(&amp;mutex);<br>        <span class="hljs-keyword">if</span>(tickets &gt; <span class="hljs-number">0</span>) &#123;<br>            usleep(<span class="hljs-number">6000</span>);<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%ld 正在卖第 %d 张门票\n&quot;</span>, pthread_self(), tickets);<br>            tickets--;<br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">// 解锁</span><br>            pthread_mutex_unlock(&amp;mutex);<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-comment">// 解锁</span><br>        pthread_mutex_unlock(&amp;mutex);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 初始化互斥量</span><br>    pthread_mutex_init(&amp;mutex, <span class="hljs-literal">NULL</span>);<br>    <span class="hljs-comment">// 创建3个子线程</span><br>    <span class="hljs-type">pthread_t</span> tid1, tid2, tid3;<br>    pthread_create(&amp;tid1, <span class="hljs-literal">NULL</span>, sellticket, <span class="hljs-literal">NULL</span>);<br>    pthread_create(&amp;tid2, <span class="hljs-literal">NULL</span>, sellticket, <span class="hljs-literal">NULL</span>);<br>    pthread_create(&amp;tid3, <span class="hljs-literal">NULL</span>, sellticket, <span class="hljs-literal">NULL</span>);<br>    <span class="hljs-comment">// 回收子线程的资源,阻塞</span><br>    pthread_join(tid1, <span class="hljs-literal">NULL</span>);<br>    pthread_join(tid2, <span class="hljs-literal">NULL</span>);<br>    pthread_join(tid3, <span class="hljs-literal">NULL</span>);<br>    pthread_exit(<span class="hljs-literal">NULL</span>); <span class="hljs-comment">// 退出主线程</span><br>    <span class="hljs-comment">// 释放互斥量资源</span><br>    pthread_mutex_destroy(&amp;mutex);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>有的时候，一个线程需要同时访问多个不同的共享资源，而每个资源又由不同的互斥量进行管理。当超过一个线程对这组互斥量进行加锁的时候，就可能出现死锁的现象。</p>
+<p>两个或两个以上的进程在执行过程中，因为抢占资源而造成的一种互相等待的现象，若无外力作用，它们都无法推进下去，此时称系统产生了死锁。</p>
+<p>死锁的几种场景：</p>
+<ol>
+<li>忘记释放锁</li>
+<li>给一个变量多次加锁</li>
+<li>多线程多锁，抢占锁资源</li>
+</ol>
+<h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p>死锁现象一般发生在对数据的写，而不是读。所以就来了读写锁。</p>
+<ol>
+<li>读写锁允许多个线程同时读。</li>
+<li>如果有一个线程在写数据，那么其他线程都不可以读写操作。</li>
+<li>写锁的优先级高于读。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><br><span class="hljs-comment">// 全局变量，所有的线程都共享这一份资源。</span><br><span class="hljs-type">int</span> num = <span class="hljs-number">1</span>;<br><span class="hljs-type">pthread_rwlock_t</span> rwlock;<br><br><span class="hljs-type">void</span> *<span class="hljs-title function_">writeNum</span><span class="hljs-params">(<span class="hljs-type">void</span> *arg)</span><br>&#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>    &#123;<br>        pthread_rwlock_wrlock(&amp;rwlock);<br>        num++;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;writeNum tid = %ld, num=%d\n&quot;</span>,pthread_self(), num);<br>        pthread_rwlock_unlock(&amp;rwlock);<br>        usleep(<span class="hljs-number">100</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><span class="hljs-type">void</span> *<span class="hljs-title function_">readNum</span><span class="hljs-params">(<span class="hljs-type">void</span> *arg)</span><br>&#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>    &#123;<br>        pthread_rwlock_rdlock(&amp;rwlock);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;readNum tid = %ld, num=%d\n&quot;</span>,pthread_self(), num);<br>        pthread_rwlock_unlock(&amp;rwlock);<br>        usleep(<span class="hljs-number">100</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    pthread_rwlock_init(&amp;rwlock, <span class="hljs-literal">NULL</span>);<br>    <span class="hljs-type">pthread_t</span> wtid[<span class="hljs-number">3</span>], rtid[<span class="hljs-number">5</span>];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++)<br>    &#123;<br>        pthread_create(&amp;wtid[i], <span class="hljs-literal">NULL</span>, writeNum, <span class="hljs-literal">NULL</span>);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++)<br>    &#123;<br>        pthread_create(&amp;rtid[i], <span class="hljs-literal">NULL</span>, readNum, <span class="hljs-literal">NULL</span>);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++)<br>    &#123;<br>        pthread_detach(wtid[i]);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++)<br>    &#123;<br>        pthread_detach(rtid[i]);<br>    &#125;<br>    pthread_exit(<span class="hljs-literal">NULL</span>);<br>    pthread_rwlock_destroy(&amp;rwlock);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="生产者消费者模型"><a href="#生产者消费者模型" class="headerlink" title="生产者消费者模型"></a>生产者消费者模型</h2><ol>
+<li>多个生产者、多个消费者</li>
+<li>线程同步问题</li>
+<li>容器满了或者空了，对消费者生产者的通知和阻塞问题。</li>
+</ol>
+<p>初始版本代码，会出现报错。段错误。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">// 生产者消费者模型</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-type">int</span> num;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">next</span>;</span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">head</span> =</span> <span class="hljs-literal">NULL</span>;<br><span class="hljs-type">int</span> sum=<span class="hljs-number">0</span>;<br><span class="hljs-type">void</span> *<span class="hljs-title function_">producer</span><span class="hljs-params">(<span class="hljs-type">void</span> *arg)</span><br>&#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>    &#123;<br>        <span class="hljs-comment">// 生产者生产一个产品</span><br>        <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">newNode</span> =</span> (<span class="hljs-keyword">struct</span> Node *)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> Node));<br>        newNode-&gt;num = rand() % <span class="hljs-number">1000</span> + <span class="hljs-number">1</span>;<br>        newNode-&gt;next = head;<br>        head = newNode;<br>        sum ++;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;++++++ num = %d, tid = %lu, sum = %d\n&quot;</span>, newNode-&gt;num,pthread_self(),sum);<br>        usleep(<span class="hljs-number">100</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><span class="hljs-type">void</span> *<span class="hljs-title function_">consumer</span><span class="hljs-params">(<span class="hljs-type">void</span> *arg)</span><br>&#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>    &#123;<br>        <span class="hljs-comment">// 消费者消费一个产品</span><br>        <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span>* <span class="hljs-title">temp</span> =</span> head;<br>        head = head-&gt;next;<br>        sum--;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;-------: num = %d, tid = %ld, sum=%d\n&quot;</span>,temp-&gt;num,pthread_self(),sum);<br>        <span class="hljs-built_in">free</span>(temp);<br>        temp = <span class="hljs-literal">NULL</span>;<br>        usleep(<span class="hljs-number">100</span>);<br>    &#125;<br>&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-comment">// 创健5个生产者线程，5个消费者线程</span><br>    <span class="hljs-type">pthread_t</span> ptid[<span class="hljs-number">5</span>], ctid[<span class="hljs-number">5</span>];<br>    <span class="hljs-type">int</span> i;<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++)<br>    &#123;<br>        pthread_create(&amp;ptid[i], <span class="hljs-literal">NULL</span>, producer, <span class="hljs-literal">NULL</span>);<br>        pthread_create(&amp;ctid[i], <span class="hljs-literal">NULL</span>, consumer, <span class="hljs-literal">NULL</span>);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++)<br>    &#123;<br>        pthread_detach(ptid[i]);<br>        pthread_detach(ctid[i]);<br>    &#125;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>    &#123;<br>        sleep(<span class="hljs-number">10</span>);<br>    &#125;<br>    pthread_exit(<span class="hljs-literal">NULL</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h2><p>条件变量不是锁，是用于阻塞线程的。</p>
+<p>条件变量的类型 <code>pthread_cond_t</code></p>
+<p><code>int pthread_cond_init(pthread_cond_t *restrict cond, const pthread_condattr_t *restrict attr);</code></p>
+<p>初始化</p>
+<p><code>int pthread_cond_destroy(pthread_cond_t *cond);</code></p>
+<p>销毁</p>
+<p><code>int pthread_cond_wait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex);</code></p>
+<p>等待，调用了该函数，线程会阻塞。但是会对里面的锁先进行解锁，当不阻塞的时候，继续向下执行，会重新加锁</p>
+<p><code>int pthread_cond_timedwait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex, const struct timespec *restrict abstime);</code></p>
+<p>等待多长时间，调用了这个函数，线程会阻塞，直到指定的时间结束。</p>
+<p><code>int pthread_cond_signal(pthread_cond_t *cond);</code></p>
+<p>唤醒一个或者多个等待的线程，通知！</p>
+<p><code>int pthread_cond_broadcast(pthread_cond_t *cond);</code></p>
+<p>唤醒所有的等待的线程</p>
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">/*</span><br><span class="hljs-comment">    信号量的类型 sem_t</span><br><span class="hljs-comment">    int sem_init(sem_t *sem, int pshared, unsigned int value);</span><br><span class="hljs-comment">        - 初始化信号量</span><br><span class="hljs-comment">        - 参数：</span><br><span class="hljs-comment">            - sem : 信号量变量的地址</span><br><span class="hljs-comment">            - pshared : 0 用在线程间 ，非0 用在进程间</span><br><span class="hljs-comment">            - value : 信号量中的值</span><br><span class="hljs-comment">    int sem_destroy(sem_t *sem);</span><br><span class="hljs-comment">        - 释放资源</span><br><span class="hljs-comment">    int sem_wait(sem_t *sem);</span><br><span class="hljs-comment">        - 对信号量加锁，调用一次对信号量的值-1，如果值为0，就阻塞</span><br><span class="hljs-comment">    int sem_trywait(sem_t *sem);</span><br><span class="hljs-comment">    int sem_timedwait(sem_t *sem, const struct timespec *abs_timeout);</span><br><span class="hljs-comment">    int sem_post(sem_t *sem);</span><br><span class="hljs-comment">        - 对信号量解锁，调用一次对信号量的值+1</span><br><span class="hljs-comment">    int sem_getvalue(sem_t *sem, int *sval);</span><br><span class="hljs-comment">    sem_t psem;</span><br><span class="hljs-comment">    sem_t csem;</span><br><span class="hljs-comment">    init(psem, 0, 8);</span><br><span class="hljs-comment">    init(csem, 0, 0);</span><br><span class="hljs-comment">    producer() &#123;</span><br><span class="hljs-comment">        sem_wait(&amp;psem);</span><br><span class="hljs-comment">        sem_post(&amp;csem)</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">    customer() &#123;</span><br><span class="hljs-comment">        sem_wait(&amp;csem);</span><br><span class="hljs-comment">        sem_post(&amp;psem)</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">// 生产者消费者模型</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;semaphore.h&gt;</span></span><br><span class="hljs-type">pthread_mutex_t</span> mutex;<br><span class="hljs-type">sem_t</span> csem;<br><span class="hljs-type">sem_t</span> psem;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-type">int</span> num;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">next</span>;</span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">head</span> =</span> <span class="hljs-literal">NULL</span>;<br><span class="hljs-type">int</span> sum = <span class="hljs-number">0</span>;<br><span class="hljs-type">void</span> *<span class="hljs-title function_">producer</span><span class="hljs-params">(<span class="hljs-type">void</span> *arg)</span><br>&#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>    &#123;<br>        <span class="hljs-comment">// 生产者生产一个产品</span><br>        sem_wait(&amp;psem);<br>        pthread_mutex_lock(&amp;mutex);<br>        <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">newNode</span> =</span> (<span class="hljs-keyword">struct</span> Node *)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> Node));<br>        newNode-&gt;num = rand() % <span class="hljs-number">1000</span> + <span class="hljs-number">1</span>;<br>        newNode-&gt;next = head;<br>        head = newNode;<br>        sum++;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;++++++ num = %d, tid = %lu, sum = %d\n&quot;</span>, newNode-&gt;num, pthread_self(), sum);<br>        <span class="hljs-comment">// 只要sum&gt;0，就唤醒消费者</span><br>        pthread_mutex_unlock(&amp;mutex);<br>        sem_post(&amp;csem);<br>        usleep(<span class="hljs-number">100</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><span class="hljs-type">void</span> *<span class="hljs-title function_">consumer</span><span class="hljs-params">(<span class="hljs-type">void</span> *arg)</span><br>&#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>    &#123;<br>        <span class="hljs-comment">// 消费者消费一个产品</span><br>        sem_wait(&amp;csem);<br>        pthread_mutex_lock(&amp;mutex);<br>        <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> *<span class="hljs-title">temp</span> =</span> head;<br>        head = head-&gt;next;<br>        sum--;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;-------: num = %d, tid = %ld, sum=%d\n&quot;</span>, temp-&gt;num, pthread_self(), sum);<br>        <span class="hljs-built_in">free</span>(temp);<br>        temp = <span class="hljs-literal">NULL</span>;<br>        pthread_mutex_unlock(&amp;mutex);<br>        sem_post(&amp;psem);<br>        usleep(<span class="hljs-number">100</span>);<br>    &#125;<br>&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-comment">// 创健5个生产者线程，5个消费者线程</span><br>    <span class="hljs-type">pthread_t</span> ptid[<span class="hljs-number">5</span>], ctid[<span class="hljs-number">5</span>];<br>    sem_init(&amp;psem, <span class="hljs-number">0</span>, <span class="hljs-number">8</span>);<br>    sem_init(&amp;csem, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>    <span class="hljs-type">int</span> i;<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++)<br>    &#123;<br>        pthread_create(&amp;ptid[i], <span class="hljs-literal">NULL</span>, producer, <span class="hljs-literal">NULL</span>);<br>        pthread_create(&amp;ctid[i], <span class="hljs-literal">NULL</span>, consumer, <span class="hljs-literal">NULL</span>);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++)<br>    &#123;<br>        pthread_join(ptid[i], <span class="hljs-literal">NULL</span>);<br>        pthread_join(ctid[i], <span class="hljs-literal">NULL</span>);<br>    &#125;<br>    pthread_mutex_destroy(&amp;mutex);<br>    pthread_exit(<span class="hljs-literal">NULL</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Linux%E7%BC%96%E7%A8%8B/" class="category-chain-item">Linux编程</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Linux多线程</div>
+      <div>https://cant-read.github.io/2023/06/03/Linux多线程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ColdBug</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年6月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/06/03/Linux%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" title="Linux网络编程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Linux网络编程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/03/Linux%E5%A4%9A%E8%BF%9B%E7%A8%8B/" title="Linux多进程">
+                        <span class="hidden-mobile">Linux多进程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
