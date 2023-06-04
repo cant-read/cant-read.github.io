@@ -1,0 +1,934 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/icon_e.png">
+  <link rel="icon" href="/images/icon_e.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ColdBug">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="NWDAF功能说明NWDAF中包含分析逻辑函数AnLF和模型训练函数MTLF。AnLF功能为执行推理，导出分析结果。MTLF用于训练机器学习模型和提供已经训练好的模型。NWDAF不需了解其他网元的工作逻辑，只需要订阅其数据即可。 NWDAF的发现和选择 6.3.13 of TS 23.501 [2].  存储在NRFNWDAF中可以包含其中一个或两个都有。有AnLF的NWDAF会在本地保存含有MT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NWDAF标准">
+<meta property="og:url" content="https://cant-read.github.io/2022/12/23/5G%E6%A0%B8%E5%BF%83%E7%BD%91/NWDAF%E6%A0%87%E5%87%86%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="ColdBug的博客">
+<meta property="og:description" content="NWDAF功能说明NWDAF中包含分析逻辑函数AnLF和模型训练函数MTLF。AnLF功能为执行推理，导出分析结果。MTLF用于训练机器学习模型和提供已经训练好的模型。NWDAF不需了解其他网元的工作逻辑，只需要订阅其数据即可。 NWDAF的发现和选择 6.3.13 of TS 23.501 [2].  存储在NRFNWDAF中可以包含其中一个或两个都有。有AnLF的NWDAF会在本地保存含有MT">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-23T11:55:33.459Z">
+<meta property="article:modified_time" content="2023-06-04T10:49:16.400Z">
+<meta property="article:author" content="ColdBug">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>NWDAF标准 - ColdBug的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"cant-read.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>ColdBug&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/images/de1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="NWDAF标准"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-12-23 19:55" pubdate>
+          2022年12月23日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">NWDAF标准</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="NWDAF功能说明"><a href="#NWDAF功能说明" class="headerlink" title="NWDAF功能说明"></a>NWDAF功能说明</h1><p>NWDAF中包含分析逻辑函数AnLF和模型训练函数MTLF。AnLF功能为执行推理，导出分析结果。MTLF用于训练机器学习模型和提供已经训练好的模型。NWDAF不需了解其他网元的工作逻辑，只需要订阅其数据即可。</p>
+<h2 id="NWDAF的发现和选择"><a href="#NWDAF的发现和选择" class="headerlink" title="NWDAF的发现和选择"></a>NWDAF的发现和选择</h2><blockquote>
+<p>6.3.13 of TS 23.501 [2].</p>
+</blockquote>
+<h3 id="存储在NRF"><a href="#存储在NRF" class="headerlink" title="存储在NRF"></a>存储在NRF</h3><p>NWDAF中可以包含其中一个或两个都有。有AnLF的NWDAF会在本地保存含有MTLF的NWDAF的ID和其支持的分析功能ID。</p>
+<p>每个NWDAF能提供的分析服务可能是专门化的，可以在NRF中的NWDAF配置文件进行描述。为了支持NF发现和选择NWDAF实例，每个NWDAF在NRF注册的时候应该要额外提供自己的<strong>Analytics ID列表</strong>。需要特定分析服务的NF可以查询NRF，来选择NWDAF。</p>
+<h3 id="存储在UDM"><a href="#存储在UDM" class="headerlink" title="存储在UDM"></a>存储在UDM</h3><p>NWDAF在执行类似UE移动性分析的服务时，可以在UDM中注册相关相关的用户和Analytics ID。</p>
+<h3 id="利用NRF发现含有AnLF的NWDAF"><a href="#利用NRF发现含有AnLF的NWDAF" class="headerlink" title="利用NRF发现含有AnLF的NWDAF"></a>利用NRF发现含有AnLF的NWDAF</h3><h4 id="NF相关服务"><a href="#NF相关服务" class="headerlink" title="NF相关服务"></a>NF相关服务</h4><ol>
+<li>当NF消费者没提供自己所请求分析数据范围时，优先在候选NWDAF中选择服务区域最大的。</li>
+<li>如果所选NWDAF不能收集所需要的数据时，可以选择拒绝请求或查询NRF发现符合条件的NWDAF。</li>
+</ol>
+<h4 id="UE相关服务"><a href="#UE相关服务" class="headerlink" title="UE相关服务"></a>UE相关服务</h4><ol>
+<li>当NF消费者没提供自己所请求分析数据范围时，优先在候选NWDAF中选择服务区域最大的。</li>
+<li>如果所选NWDAF不能收集所需要的数据时，可以选择拒绝请求或查询AMF，获取UE的定位信息，用UE的跟踪区域信息查询NRF，找到合适的NWDAF。</li>
+</ol>
+<h3 id="发现已在-UDM-中为给定-UE-注册的-NWDAF"><a href="#发现已在-UDM-中为给定-UE-注册的-NWDAF" class="headerlink" title="发现已在 UDM 中为给定 UE 注册的 NWDAF"></a>发现已在 UDM 中为给定 UE 注册的 NWDAF</h3><p>查询UDM</p>
+<h3 id="发现有数据暴露功能的NWDAF"><a href="#发现有数据暴露功能的NWDAF" class="headerlink" title="发现有数据暴露功能的NWDAF"></a>发现有数据暴露功能的NWDAF</h3><p>通过NRF查询提供Nnwdaf_DataManagement服务的NWDAF，同时还有其关联的数据源的NF种类或NF集ID。</p>
+<h3 id="通过NRF发现有MTLF的NWDAF"><a href="#通过NRF发现有MTLF的NWDAF" class="headerlink" title="通过NRF发现有MTLF的NWDAF"></a>通过NRF发现有MTLF的NWDAF</h3><p>包含MTLF的NWDAF，如果训练的模型可以被Analytics ID使用，就在向NRF注册时提供与模型相关的Analytics ID列表和对每个AnalyticsID的机器学习模型过滤信息（S-NSSAI和 Area(s) of Interest ）。</p>
+<p>S-NSSAI和 Area(s) of Interest来自NWDAF的NF配置文件中指示的S-NSSAI和NWDAF服务区域信息。</p>
+<h3 id="在REL17中"><a href="#在REL17中" class="headerlink" title="在REL17中"></a>在REL17中</h3><p>包含AnLF的NWDAF会预配置候选含有MTLF的NWDAF列表，从列表里面挑选。</p>
+<h2 id="多个NWDAF部署"><a href="#多个NWDAF部署" class="headerlink" title="多个NWDAF部署"></a>多个NWDAF部署</h2><p>NWDAF架构允许灵活的部署方式，层级或者树形；数量也可以在部署时灵活调整。</p>
+<p>在多NWDAF部署中，如果网络没有DCCF、MFAF时，NWDAF可以提供数据收集暴露能力，以根据其他NWDAF收集的数据生成分析结果。</p>
+<h1 id="网元数据收集协调功能（NWDAForDCCF）"><a href="#网元数据收集协调功能（NWDAForDCCF）" class="headerlink" title="网元数据收集协调功能（NWDAForDCCF）"></a>网元数据收集协调功能（NWDAForDCCF）</h1><p>它可以防止数据源由于数据消费者的请求不协调而不得不处理同一数据的多个订阅，并发送包含相同信息的多个通知。</p>
+<p>其功能由 Ndccf_DataManagement实现，若没有DCCF，则通过NWDAF的 Nnwdaf_DataManagement服务实现。DCCF可服务的NF如下：</p>
+<ol>
+<li>NWDAF：从数据源请求数据</li>
+<li>NF消费者：向NWDAF请求数据</li>
+<li>NF消费者：向ADRF请求数据</li>
+<li>ADRF：从数据源接受数据</li>
+</ol>
+<p>Nnwdaf_DataManagement用于从历史数据或运行数据中收集数据；</p>
+<p>Nnwdaf_DataManagement用于收集分析好的数据。</p>
+<h2 id="DCCF"><a href="#DCCF" class="headerlink" title="DCCF"></a>DCCF</h2><p>数据消费者通过NRF发现和选择可提供数据收集协调功能的DCCF（or NWDAF），数据消费者向DCCF发起请求而非向数据源。在收到消费者的请求后，被选中的DCCF可自己决定数据（如果消费者没指定）。DCCF可以从ADRF中搜索数据。</p>
+<p>为了给某个特定的UE检索数据，NRF、UDM或BSF可以使用表中所示的服务向DCCF提供数据源的标识。</p>
+<table>
+<thead>
+<tr>
+<th align="left">Type of NF instance (serving the UE) to  determine</th>
+<th align="left">NF to be contacted by DCCF</th>
+<th align="left">Service</th>
+<th align="left">Reference in  TS 23.502 [3]</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">UDM</td>
+<td align="left">NRF</td>
+<td align="left">Nnrf_NFDiscovery</td>
+<td align="left">5.2.7.3</td>
+</tr>
+<tr>
+<td align="left">AMF</td>
+<td align="left">UDM</td>
+<td align="left">Nudm_UECM</td>
+<td align="left">5.2.3.2</td>
+</tr>
+<tr>
+<td align="left">SMF</td>
+<td align="left">UDM</td>
+<td align="left">Nudm_UECM</td>
+<td align="left">5.2.3.2</td>
+</tr>
+<tr>
+<td align="left">BSF</td>
+<td align="left">NRF</td>
+<td align="left">Nnrf_NFDiscovery</td>
+<td align="left">5.2.7.3</td>
+</tr>
+<tr>
+<td align="left">PCF</td>
+<td align="left">BSF</td>
+<td align="left">Nbsf_Management</td>
+<td align="left">5.2.13.2</td>
+</tr>
+<tr>
+<td align="left">NEF</td>
+<td align="left">NRF</td>
+<td align="left">Nnrf_NFDiscovery</td>
+<td align="left">5.2.7.3</td>
+</tr>
+<tr>
+<td align="left">NWDAF</td>
+<td align="left">UDM</td>
+<td align="left">Nudm_UECM</td>
+<td align="left">5.2.3.2</td>
+</tr>
+</tbody></table>
+<p>DCCF会确定收集数据的状态，如过请求参数匹配了先前的请求参数，则可判断数据已经被收集了或者可以通过调整已经收集的数据来完成。该状态在第5A.3条中用于向数据消费者和通知端点传递数据。</p>
+<p>对于长期数据收集的持久事件暴露订阅，当服务于UE的数据源发生变化时，DCCF可以订阅UDM以接收事件通知。</p>
+<p>如果数据源改变（例如，由于NF生命周期事件），DCCF可以订阅NRF以接收事件通知。</p>
+<p>一个DCCF可以支持多个数据源、多个消费者。但是一个数据源职能对应一个DCCF。</p>
+<h1 id="数据分发功能"><a href="#数据分发功能" class="headerlink" title="数据分发功能"></a>数据分发功能</h1><p>根据DCCF或NWDAF上配置的传递选项，向消费者或通知端点提供数据。分发选项包括：</p>
+<ol>
+<li>通过NWDAF or DCCF</li>
+<li>通过Messaging Framework</li>
+</ol>
+<p>从数据源接受的通知事件都由DCCF转发给对应的数据消费者，数据消费者可以指定DCCF抄送数据给其他端点（ADRF等）</p>
+<p>DCCF可以包含对数据进行格式化的功能，可以根据消费者的格式和处理说明进行处理。</p>
+<h2 id="当DCCF确定请求后："><a href="#当DCCF确定请求后：" class="headerlink" title="当DCCF确定请求后："></a>当DCCF确定请求后：</h2><p>请求有三种情况，分别是数据没被收集、部分收集、已经收集了。</p>
+<p>DCCF收到通知后，将根据每个消费者和通知端点的格式和处理说明对其进行处理。DCCF随后通过Ndccf_DataManagement服务向消费者和通知端点发送通知。</p>
+<h1 id="数据编排和处理功能"><a href="#数据编排和处理功能" class="headerlink" title="数据编排和处理功能"></a>数据编排和处理功能</h1><p>格式化和&#x2F;或处理指令可以在数据消费者经由Ndccf_DataManagement服务和Nnwdaf_DataManagement服务的请求中提供。**作为提供单个事件的替代方案，编排可以用于聚合通知，处理可以用于从多个通知中提取和发送摘要信息。数据格式化和处理适用于</p>
+<p>第5A.5条所述的数据源（运行时数据或分析）和历史数据中发生的事件通知。</p>
+<h2 id="数据编排"><a href="#数据编排" class="headerlink" title="数据编排"></a>数据编排</h2><p>通过数据编排，可以规定怎么样给消费者发送通知。</p>
+<ol>
+<li>通知事件集合</li>
+<li>通知时间窗口</li>
+<li>基于跨事件引用的通知</li>
+<li>消费者触发通知：消费者通过fetch flag来获取编排好的数据，当消费者设置了这个falg后，NWDAF DCCF的对于该消费者的通知就要包含这个flag。</li>
+<li>基于时刻的通知</li>
+<li>基于时间窗口递增的通知</li>
+</ol>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><p>数据处理对数据进行总结提取，以减少给消费者发送的数据量。处理的结果是将多个通知的信息汇总到一个共同的报告中。在处理指令中指定的处理区间内，会对数据进行处理以纳入发送给消费者的每个通知中。如果格式化指示或事件报告信息（如TS 23.502[3]表4.15.1.1-1中规定的）要求在处理间隔结束前将通知发送给消费者，则发送给消费者的通知可能代表部分间隔。处理指示是按事件ID或分析ID提供的，并适用于由同一订阅和同一事件ID或分析ID产生的多个通知。除了处理区间外，处理指示还可以指定参数名称、参数值以及要确定并报告给消费者的属性。处理指令还可以指定聚合级别（例如，每个UE、每个AoIs）或时间聚合（例如，每分钟、每小时）和匿名化规则，以匿名化UE标识。经处理的通知可包括以下内容，具体取决于事件和处理指令。</p>
+<ol>
+<li>事件</li>
+<li>处理间隔</li>
+<li>事件参数列表，由参数名，参数值，和该参数的相关信息组成。相关信息如下：<ol>
+<li>事件间隔</li>
+<li>事件持续时间</li>
+<li>参数出现次数</li>
+<li>参数的统计信息</li>
+</ol>
+</li>
+</ol>
+<p>事件参数名称是特定于事件的，并非所有属性都适用于所有参数名称。表5A.4-1提供了事件参数名称和参数值的示例。</p>
+<h1 id="历史数据处理"><a href="#历史数据处理" class="headerlink" title="历史数据处理"></a>历史数据处理</h1><h2 id="ADRF-or-NWDAF作为数据源"><a href="#ADRF-or-NWDAF作为数据源" class="headerlink" title="ADRF or NWDAF作为数据源"></a>ADRF or NWDAF作为数据源</h2><p>DCCF根据消费者的ADRF identification来确定从ADRF获取数据。</p>
+<h2 id="ADRF-or-NWDAF作为数据接收者"><a href="#ADRF-or-NWDAF作为数据接收者" class="headerlink" title="ADRF or NWDAF作为数据接收者"></a>ADRF or NWDAF作为数据接收者</h2><ol>
+<li>ADRF或NWDAF可以是向DCCF发起数据请求的消费者NF，ADRF或NW DAF可以由另一个希望将其请求的数据存档的消费者NF指定为通知端点，或者DCCF可以被配置为将某些数据存档在ADRF中（例如，来自AMF实例的所有数据）。</li>
+<li>如果消费者NF在数据请求中未指定ADRF或NWDAF实例，则DCCF可以基于提供的信息或从NRF接收的信息来选择ADRF或NWDAF实例。</li>
+<li>根据配置的交付选项（通过DCCF或消息框架）将数据交付给ADRF或NWDAF。</li>
+</ol>
+<h1 id="分析数据仓库功能"><a href="#分析数据仓库功能" class="headerlink" title="分析数据仓库功能"></a>分析数据仓库功能</h1><h2 id="存储数据"><a href="#存储数据" class="headerlink" title="存储数据"></a>存储数据</h2><ol>
+<li>直接发Nadrf_DataManagement_StorageRequest，将数据或者分析结果在请求中传递给ADRF。</li>
+<li>通过Nadrf_DataManagement_StorageSubscriptionRequest，让ADRF订阅NWDAF或者DCCF。</li>
+</ol>
+<h2 id="检索数据"><a href="#检索数据" class="headerlink" title="检索数据"></a>检索数据</h2><ol>
+<li>消费者通过Nadrf_DataManagement_RetrievalRequest请求检索数据，如果检索到，就将结果作为respone返回。</li>
+<li>Nadrf_DataManagement_RetrievalSubscribe，可以订阅ADRF的信息。</li>
+<li>a consumer sending an Nadrf_DataManagement_Delete request.</li>
+</ol>
+<h1 id="支持网络数据分析的流程"><a href="#支持网络数据分析的流程" class="headerlink" title="支持网络数据分析的流程"></a>支持网络数据分析的流程</h1><h2 id="分析暴露流程"><a href="#分析暴露流程" class="headerlink" title="分析暴露流程"></a>分析暴露流程</h2><h3 id="分析服务订阅-x2F-取消订阅-Analytics-Subscribe-x2F-Unsubscribe"><a href="#分析服务订阅-x2F-取消订阅-Analytics-Subscribe-x2F-Unsubscribe" class="headerlink" title="分析服务订阅&#x2F;取消订阅 Analytics Subscribe&#x2F;Unsubscribe"></a>分析服务订阅&#x2F;取消订阅 Analytics Subscribe&#x2F;Unsubscribe</h3><p><code>Nnwdaf_AnalyticsSubscription</code>服务</p>
+<h4 id="用户对NWDAF的订阅服务"><a href="#用户对NWDAF的订阅服务" class="headerlink" title="用户对NWDAF的订阅服务"></a>用户对NWDAF的订阅服务</h4><p><code>Nnwdaf_AnalyticsSubscription_Subscribe</code></p>
+<p><code>Nnwdaf_AnalyticsSubscription_Unsubscribe</code></p>
+<h4 id="NWDAF对订阅用户的通知服务"><a href="#NWDAF对订阅用户的通知服务" class="headerlink" title="NWDAF对订阅用户的通知服务"></a>NWDAF对订阅用户的通知服务</h4><p><code>Nnwdaf_AnalyticsSubscription_Notify</code></p>
+<h3 id="分析服务请求-Analytics-Request"><a href="#分析服务请求-Analytics-Request" class="headerlink" title="分析服务请求 Analytics Request"></a>分析服务请求 Analytics Request</h3><p><code>Nnwdaf_AnalyticsInfo</code>服务</p>
+<h4 id="用户对NWDAF的请求服务"><a href="#用户对NWDAF的请求服务" class="headerlink" title="用户对NWDAF的请求服务"></a>用户对NWDAF的请求服务</h4><p><code>Nnwdaf_AnalyticsInfo_Request</code></p>
+<p><code>Nnwdaf_AnalyticsInfo_Request response</code></p>
+<p>用户对NWDAF发起请求，可选的请求参数见6.1.3</p>
+<h3 id="分析服务暴露的内容-Contents-of-Analytics-Exposure"><a href="#分析服务暴露的内容-Contents-of-Analytics-Exposure" class="headerlink" title="分析服务暴露的内容 Contents of Analytics Exposure"></a>分析服务暴露的内容 Contents of Analytics Exposure</h3><p>第7条中描述的<code>Nnwdaf_AnalyticsSubscription_Subscribe</code>或<code>Nnwdav_AnalytisInfo_Request</code>服务操作的使用者提供以下输入参数。</p>
+<ul>
+<li>A list of Analytics ID(s): 标识所请求的分析服务</li>
+<li>Target of Analytics Reporting：分析报告的目标，指示要分析的对象是什么</li>
+<li>使用以下参数作为分析报告的信息：<ul>
+<li>分析目标时间段：时间间隔[start..end]，过去（过去的开始时间和结束时间）或将来（将来的开始时间或结束时间）。过去的分析目标时段是统计信息的请求或订阅。未来的分析目标期是对预测的请求或订阅。时间间隔用实际开始时间和实际结束时间表示（例如通过UTC时间）。</li>
+</ul>
+</li>
+</ul>
+<p>NWDAF向第7条中描述的<code>Nnwdaf_AnalyticsSubscription_Notify或Nnwdav_AnalytisInfo_Request</code>服务操作的消费者提供以下输出信息：</p>
+<ol>
+<li>在目标时间段内，每个Analytics ID所对应的分析信息</li>
+<li>分析生成的时间戳</li>
+<li>有效期</li>
+<li>置信度</li>
+</ol>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/5G%E6%A0%B8%E5%BF%83%E7%BD%91/" class="category-chain-item">5G核心网</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>NWDAF标准</div>
+      <div>https://cant-read.github.io/2022/12/23/5G核心网/NWDAF标准记录/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ColdBug</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年12月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/27/C++%E9%A1%B9%E7%9B%AE/json%E8%A7%A3%E6%9E%90%E5%99%A8/" title="JSON解析器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JSON解析器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/" title="《5G核心网规划和应用》笔记">
+                        <span class="hidden-mobile">《5G核心网规划和应用》笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'cant-read/cant-read.github.io');
+      s.setAttribute('issue-term', 'title');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       猪咪之家<i class="iconfont icon-love"></i>1424498212@qq.com 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/metowolf/Metingjs@1.2/dist/Meting.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

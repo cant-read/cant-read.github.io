@@ -1,0 +1,1015 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/icon_e.png">
+  <link rel="icon" href="/images/icon_e.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="ColdBug">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="SBA架构SBA概念5G核心网采用了更方便、灵活的垂直行业架构，即SBA。 在面向业务的5G网络架构中，控制面的功能进行了融合和统一，同时控制面功能也分解成为多个独立的网络服务，这些独立的网络服务可以根据业务需求进行灵活的组合。每个网络服务和其他服务在业务功能上解耦，并且对外提供同一类型的服务化接口，向其他调用者提供服务，将多个耦合接口转变为同一类型的服务化接口，可以有效地减少接口数量，并统一服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《5G核心网规划和应用》笔记">
+<meta property="og:url" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/index.html">
+<meta property="og:site_name" content="ColdBug的博客">
+<meta property="og:description" content="SBA架构SBA概念5G核心网采用了更方便、灵活的垂直行业架构，即SBA。 在面向业务的5G网络架构中，控制面的功能进行了融合和统一，同时控制面功能也分解成为多个独立的网络服务，这些独立的网络服务可以根据业务需求进行灵活的组合。每个网络服务和其他服务在业务功能上解耦，并且对外提供同一类型的服务化接口，向其他调用者提供服务，将多个耦合接口转变为同一类型的服务化接口，可以有效地减少接口数量，并统一服务">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.10.50.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.13.03.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.13.47.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.14.12.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.20.01.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.20.26.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.38.40.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.39.02.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.40.57.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.41.21.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.42.26.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.42.47.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-13%2015.58.07.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-13%2016.21.34.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-13%2016.35.26.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-13%2020.08.19.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-14%2015.25.37.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-14%2015.37.20.png">
+<meta property="og:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-14%2015.37.34.png">
+<meta property="article:published_time" content="2022-10-13T03:58:13.302Z">
+<meta property="article:modified_time" content="2023-06-04T11:00:05.102Z">
+<meta property="article:author" content="ColdBug">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cant-read.github.io/2022/10/13/5G%E6%A0%B8%E5%BF%83%E7%BD%91/%E3%80%8A5G%E6%A0%B8%E5%BF%83%E7%BD%91%E8%A7%84%E5%88%92%E4%B8%8E%E5%BA%94%E7%94%A8%E3%80%8B/%E6%88%AA%E5%B1%8F2022-10-12%2011.10.50.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>《5G核心网规划和应用》笔记 - ColdBug的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"cant-read.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":2},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>ColdBug&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/images/de1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="《5G核心网规划和应用》笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-13 11:58" pubdate>
+          2022年10月13日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          62 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">《5G核心网规划和应用》笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="SBA架构"><a href="#SBA架构" class="headerlink" title="SBA架构"></a>SBA架构</h1><h2 id="SBA概念"><a href="#SBA概念" class="headerlink" title="SBA概念"></a>SBA概念</h2><p>5G核心网采用了更方便、灵活的垂直行业架构，即SBA。</p>
+<p>在面向业务的5G网络架构中，控制面的功能进行了融合和统一，同时控制面功能也分解成为多个独立的网络服务，这些独立的网络服务可以根据业务需求进行灵活的组合。每个网络服务和其他服务在业务功能上解耦，并且对外提供同一类型的服务化接口，向其他调用者提供服务，将多个耦合接口转变为同一类型的服务化接口，可以有效地减少接口数量，并统一服务调用方式，进而提升了网络的灵活性。</p>
+<p>5G核心网控制平面功能借鉴了IT系统中的服务化架构，采用基于服务的设计方案来描述控制面网络功能及接口交互。由于SBA采用 IT 化总线，服务模块可自主注册、发布、发现，提高了功能的重用性。3GPP 标准规定了服务接口协议采用TCP&#x2F;TLS&#x2F;HTTP2&#x2F;JSON, SBA提供了基于服务化的调用接口，服务化接口基于TCP&#x2F;HTTP 2.0进行通信，使用JSON作为应用层通信协议的封装。</p>
+<p>基于TCP&#x2F;HTTP 2.0&#x2F;JSON 的调用方式，使用轻量化IT技术框架，可以适应 5G网络灵活组网定义、快速开发、动态部署的需求。其中，SBA中的控制面“总线”只进行基于路由器 3&#x2F;4层协议的转发，而不会感知上层的协议。</p>
+<h2 id="SBA特征"><a href="#SBA特征" class="headerlink" title="SBA特征"></a>SBA特征</h2><ol>
+<li><p>传统网元被拆分</p>
+<p>伴随着虚拟化技术在电信领域的应用，传统意义上的核心网网元实现了软件、硬件解耦，软件部分被称为NF。3GPP定义的SBA将一个网络功能进一步拆分成若干个自包含、自管理、可重用的网络功能服务，这些网络功能相互之间解耦，具备独立升级、独立弹性的能力，具备标准接口与其他网络功能服务互通，并且可以通过编排工具根据不同的需求进行编排和实例化部署。解耦的服务可以独立扩容、演进、按需部署，而不会互相影响。</p>
+</li>
+<li><p>网元功能服务管理自动化</p>
+<p>5G核心网的网络功能服务实现了自动化管理，通过NRF来实现。NRF支持的几个主要功能如下所述。</p>
+<p>（1）网络功能服务的自动注册、更新或去注册<br>每个网络功能服务在业务加载时会自动向NRF注册本服务的IP地址、域名、支持的能力等信息。在信息变更后自动同步到NRF，在关闭时向NRF进行去注册。NRF维护整个网络内所有网络功能服务的实时信息。<br>（2）网络功能服务的自动发现和选择<br>在5G核心网中，每个网络功能服务都会通过NRF来寻找合适的对端服务，而不是依赖本地配置的方式固化通信对端。NRF会根据当前信息向请求者返回对应的响应者网络功能服务列表，供请求者自己选择。这种方式类似于DNS机制，以实现网络功能服务的自动发现和选择。<br>（3）网络功能服务的状态检测<br>NRF可以与各网络功能服务之间进行双向定期状态检测，当某个网络功能服务异常时， NRF将异常状态通知到与其相关的网络功能服务。<br>（4）网络功能服务的认证授权<br>NRF作为管理类网络功能，需要考虑网络的安全机制，以防止被非法网络功能服务“劫持”业务。</p>
+</li>
+<li><p>网络通信路径优化</p>
+<p>传统核心网的网元之间有着固定的通信链路和通信路径。在5G核心网的服务化架构下，各网络功能在服务之前可以根据需求随意通信。以用户位置信息策略为例，PCF可以提前订阅用户的位置信息变更事件，当AMF中的网络服务功能检测到用户发生位置变更时，发布用户位置信息变更事件，PCF可直接实时接收到该事件，无须其他网络功能服务进行中转。</p>
+</li>
+<li><p>网络功能服务间的交互接耦</p>
+<p>传统核心网的网元之间的通信遵循请求者和响应者点对点模式。这种模式是一种相互耦合的传统模式。5G核心网架构下的网络功能服务间通信机制可进一步解耦为生产者和消费者模式，生产者发布相关能力，并不关注消费者是谁，消费者在什么地方。消费者订阅相关能力，并不关注生产者是谁，生产者在什么地方。因此同一个服务可以被多种NF调用，进而提升服务的重用性。</p>
+</li>
+</ol>
+<h2 id="网络功能服务"><a href="#网络功能服务" class="headerlink" title="网络功能服务"></a>网络功能服务</h2><ul>
+<li>请求–响应</li>
+<li>订阅–通知</li>
+</ul>
+<h2 id="网元功能概述"><a href="#网元功能概述" class="headerlink" title="网元功能概述"></a>网元功能概述</h2><h3 id="AMF"><a href="#AMF" class="headerlink" title="AMF"></a>AMF</h3><h4 id="AMF架构图"><a href="#AMF架构图" class="headerlink" title="AMF架构图"></a>AMF架构图</h4><img src="截屏2022-10-12 11.10.50.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.10.50" style="zoom:50%;" />
+
+<h4 id="AMF具体服务"><a href="#AMF具体服务" class="headerlink" title="AMF具体服务"></a>AMF具体服务</h4><img src="截屏2022-10-12 11.13.03.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.13.03" style="zoom:50%;" />
+
+<p><strong>AMF可实现的具体功能：</strong></p>
+<ul>
+<li>NSA消息的加密与完整性保护。</li>
+<li>注册管理。</li>
+<li>可达性管理。</li>
+<li>移动性管理。</li>
+<li>合法监听。</li>
+<li>会话管理信息转发。</li>
+<li>接入鉴权与认证。</li>
+<li>UE与SMSF之间的短消息内容的转发。</li>
+<li>安全上下文管理。</li>
+<li>位置服务管理。</li>
+<li>位置信息传递。</li>
+<li>UE移动性事件通知。</li>
+</ul>
+<h3 id="SMF"><a href="#SMF" class="headerlink" title="SMF"></a>SMF</h3><h4 id="SMF架构图"><a href="#SMF架构图" class="headerlink" title="SMF架构图"></a>SMF架构图</h4><img src="截屏2022-10-12 11.13.47.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.13.47" style="zoom:50%;" />
+
+<h4 id="SMF具体服务"><a href="#SMF具体服务" class="headerlink" title="SMF具体服务"></a>SMF具体服务</h4><img src="截屏2022-10-12 11.14.12.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.14.12" style="zoom:50%;" />
+
+<p><strong>SMF可实现的具体功能如下所述。</strong></p>
+<ul>
+<li>会话管理（例如，会话建立&#x2F;修改&#x2F;释放）。</li>
+<li>UE IP地址分配与管理。</li>
+<li>UPF的选择与控制。</li>
+<li>路由配置。</li>
+<li>策略控制。</li>
+<li>合法监听。</li>
+<li>计费数据采集。</li>
+<li>会话和服务连续模式（Session and Service Continuity Mode,SSCM）的决策。</li>
+<li>漫游功能。</li>
+</ul>
+<blockquote>
+<p>UPF的流量规则配置？？？</p>
+</blockquote>
+<h3 id="PCF"><a href="#PCF" class="headerlink" title="PCF"></a>PCF</h3><h4 id="PCF架构图"><a href="#PCF架构图" class="headerlink" title="PCF架构图"></a>PCF架构图</h4><img src="截屏2022-10-12 11.20.01.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.20.01" style="zoom:50%;" />
+
+<h4 id="PCF具体服务"><a href="#PCF具体服务" class="headerlink" title="PCF具体服务"></a>PCF具体服务</h4><img src="截屏2022-10-12 11.20.26.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.20.26" style="zoom:67%;" />
+
+<p><strong>PCF可实现的功能如下所述。</strong></p>
+<ul>
+<li>支持统一的策略框架来管理网络行为。</li>
+<li>为控制平面功能提供策略规则以强制执行它们。</li>
+<li>访问与统一数据存储库（Unified Data Repository,UDR）中的策略决策相关的用户信息。</li>
+</ul>
+<h4 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h4><p>PCF为多种功能提供策略控制：会话管理相关、与接入和移动性相关、UE接入选择相关和PDU会话选择相关。</p>
+<p>PCF和AMF交互，进行接入和移动性策略控制，包括服务区域限制管理和RFSP（频率选择优先级）管理。</p>
+<h3 id="UDM"><a href="#UDM" class="headerlink" title="UDM"></a>UDM</h3><h4 id="UDM架构图"><a href="#UDM架构图" class="headerlink" title="UDM架构图"></a>UDM架构图</h4><img src="截屏2022-10-12 11.38.40.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.38.40" style="zoom:50%;" />
+
+<h4 id="UDM具体服务表"><a href="#UDM具体服务表" class="headerlink" title="UDM具体服务表"></a>UDM具体服务表</h4><img src="截屏2022-10-12 11.39.02.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.39.02" style="zoom:50%;" />
+
+<p><strong>UDM可实现的功能如下所述。</strong></p>
+<ul>
+<li>生成 3GPP AKA 身份验证凭据。</li>
+<li>用户识别处理。</li>
+<li>基于用户数据的接入授权。</li>
+<li>UE 的服务 NF 注册管理。</li>
+<li>支持服务&#x2F;会话连续性。</li>
+<li>合法监听功能。</li>
+<li>用户管理。</li>
+<li>短信管理。</li>
+</ul>
+<h3 id="NRF"><a href="#NRF" class="headerlink" title="NRF"></a>NRF</h3><h4 id="NRF架构图"><a href="#NRF架构图" class="headerlink" title="NRF架构图"></a>NRF架构图</h4><img src="截屏2022-10-12 11.40.57.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.40.57" style="zoom:50%;" />
+
+<h4 id="NRF具体服务"><a href="#NRF具体服务" class="headerlink" title="NRF具体服务"></a>NRF具体服务</h4><img src="截屏2022-10-12 11.41.21.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.41.21" style="zoom:50%;" />
+
+<p><strong>NRF服务支持以下功能。</strong></p>
+<ul>
+<li>支持服务发现功能。</li>
+<li>从 NF 实例接收 NF 发现请求，并将发现的 NF 实例（被发现）的信息提供给 NF 实例。</li>
+<li>维护可用 NF 实例及其支持服务的 NF 配置文件。</li>
+</ul>
+<h3 id="NSSF"><a href="#NSSF" class="headerlink" title="NSSF"></a>NSSF</h3><h4 id="NSSF架构图"><a href="#NSSF架构图" class="headerlink" title="NSSF架构图"></a>NSSF架构图</h4><img src="截屏2022-10-12 11.42.26.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.42.26" style="zoom:50%;" />
+
+<h4 id="NSSF具体服务"><a href="#NSSF具体服务" class="headerlink" title="NSSF具体服务"></a>NSSF具体服务</h4><img src="截屏2022-10-12 11.42.47.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-12 11.42.47" style="zoom:50%;" />
+
+<p><strong>NSSF可实现的功能如下所述。</strong></p>
+<ul>
+<li>选择为UE服务的网络切片实例集。</li>
+<li>确定允许的网络切片选择辅助信息（Network Slice Selection Assistance Information, NSSAI），如果需要，确定到订阅的单个网络切片选择辅助信息（Single Network Slice Selection Assistance Information,S-NSSAI）的映射。</li>
+<li>确定已配置的NSSAI，如果需要，确定到订阅的S-NSSAI的映射。</li>
+<li>确定用于服务UE的AMF集，或者基于配置，可能通过查询NRF来确定候选AMF的列表。</li>
+</ul>
+<h1 id="网络切片"><a href="#网络切片" class="headerlink" title="网络切片"></a>网络切片</h1><h2 id="前置的知识"><a href="#前置的知识" class="headerlink" title="前置的知识"></a>前置的知识</h2><h3 id="DCN——4G专用核心网（Dedicate-Core-Networ）"><a href="#DCN——4G专用核心网（Dedicate-Core-Networ）" class="headerlink" title="DCN——4G专用核心网（Dedicate Core Networ）"></a>DCN——4G专用核心网（Dedicate Core Networ）</h3><p>专用核心网是为了支持特定的功能用户。</p>
+<p>可以提供特定功能或者隔离特定的用户设备和用户。</p>
+<h3 id="PDU——协议数据单元（Protocol-Data-Unit）"><a href="#PDU——协议数据单元（Protocol-Data-Unit）" class="headerlink" title="PDU——协议数据单元（Protocol Data Unit）"></a>PDU——协议数据单元（Protocol Data Unit）</h3><p>每个网络层次传输的东西，传输层PDU叫段，网络层PDU叫报文，链路层PDU叫帧，物理层PDU叫比特，<strong>统称数据包</strong>。</p>
+<h4 id="PDU会话"><a href="#PDU会话" class="headerlink" title="PDU会话"></a>PDU会话</h4><p>一个PDU会话是指一个用户终端UE与数据网络DN之间进行通讯的过程。PDU会话建立后，也就是建立了一条UE和DN的数据传输通道。PDU会话的类似于2&#x2F;3G的PDP上下文、4G的承载上下文。</p>
+<p>5G终端在有业务需求的时候会发起建立PDU会话的申请，在5G网络中建立PDU会话只能由终端发起。</p>
+<p>但这并不意味着终端不发起会话外部数据就无法发送给终端，在这种情况下网络会对终端进行寻呼，终端接收到寻呼进行响应，再发起Service Request流程，申请PDU会话的建立就可以了。</p>
+<p>因此，PDU会话的过程可以是用户发起的也可以是服务器发起的。</p>
+<h2 id="网络切片的概念"><a href="#网络切片的概念" class="headerlink" title="网络切片的概念"></a>网络切片的概念</h2><h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>为了解决DCN的缺点</p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>3GPP给网络切片的定义是<strong>a logical network that provides specifi c network capabilities and network characteristics</strong>。网络基于运营商和客户的SLA（service level agreement）协议，可以提供定制化、相互隔离的网络服务，是逻辑上端到端的。</p>
+<p>网络切片实例包括网络、存储、计算等资源，以及资源相互间的连接。网络功能通过虚拟网元和网络管理系统实现。网络中的终端、接入网、传输网、核心网、业务网都能称作<strong>网元</strong>。</p>
+<blockquote>
+<p>网络切片这里有一些资源配置调度的算法论文，面向某个网络场景的资源分配问题。</p>
+</blockquote>
+<p>切片之间都是逻辑上隔离的，所以相互不会影响。</p>
+<h3 id="端到端网络切片示意图"><a href="#端到端网络切片示意图" class="headerlink" title="端到端网络切片示意图"></a>端到端网络切片示意图</h3><img src="截屏2022-10-13 15.58.07.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-13 15.58.07" style="zoom:50%;" />
+
+<p><strong>核心网层面：</strong></p>
+<ol>
+<li>控制和承载分离。能进行功能裁剪，基于业务对功能模块进行灵活设计。</li>
+<li>切片的控制和选择：能引导UE接入合适的网络切片；能对UE的标签进行决策和分配；</li>
+<li>支持按照应用的切片选择策略进行决策和更新，从而达到不同场景的切片内功能的定制化。（根据应用，调整切片设置？）</li>
+</ol>
+<h3 id="切片的形式"><a href="#切片的形式" class="headerlink" title="切片的形式"></a>切片的形式</h3><p>核心网网络切片实现端到端网络切片的终端接入控制、切片选择和切片的协同管理。核心网包括移动性、会话管理、计费、QoS、应用优化功能等多样化的能力，为切片的定制能力提供了丰富的选择。</p>
+<h2 id="网络切片使用"><a href="#网络切片使用" class="headerlink" title="网络切片使用"></a>网络切片使用</h2><h3 id="终端——NSSAI"><a href="#终端——NSSAI" class="headerlink" title="终端——NSSAI"></a>终端——NSSAI</h3><p>终端提供网络切片选择辅助信息（Network Slice Selection Assistance Information, NSSAI）</p>
+<p>每个NSSAI对应一个网络切片，包含着业务的类型和业务类型的差异因子</p>
+<p>NSSAI可以是预设值，也可以是终端附着后从网络中获取的。</p>
+<h3 id="网络切片标识-S-NSSAI"><a href="#网络切片标识-S-NSSAI" class="headerlink" title="网络切片标识 S-NSSAI"></a>网络切片标识 S-NSSAI</h3><p>由SST和SD两部分组成标识的报文。</p>
+<ul>
+<li>SST，表征对应的切片特征和业务期待的网络切片行为。</li>
+<li>SD，是对SST的补充，区分相同SST的不同切片。</li>
+</ul>
+<img src="截屏2022-10-13 16.21.34.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-13 16.21.34" style="zoom:50%;" />
+
+<h3 id="网络切片的层次关系"><a href="#网络切片的层次关系" class="headerlink" title="网络切片的层次关系"></a>网络切片的层次关系</h3><p>网络切片的层次分为：网络功能（NF）、切片实例（<strong>NSI</strong>）和切片子网实例（NSSI）。<br>一个NSI可以支持某个&#x2F;多个通信业务，包含多个NF。<br>一个NSSI可以包含多个NF。<br>一个NSI可以由多个NSSI组成。<br>一个NSSI可以被多个NSI共用。</p>
+<h3 id="网络切片操作-–-NSSF功能实体"><a href="#网络切片操作-–-NSSF功能实体" class="headerlink" title="网络切片操作 – NSSF功能实体"></a>网络切片操作 – <strong>NSSF</strong>功能实体</h3><h4 id="NSSF功能"><a href="#NSSF功能" class="headerlink" title="NSSF功能"></a>NSSF功能</h4><ul>
+<li>为UE选择网络切片实例集合、</li>
+<li>确定Allowed NSSAI</li>
+<li>确定为UE服务的AMF集合（AMF Set）、候选AMF列表。</li>
+</ul>
+<img src="截屏2022-10-13 16.35.26.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-13 16.35.26" style="zoom:50%;" />
+
+<h2 id="网络切片的管理"><a href="#网络切片的管理" class="headerlink" title="网络切片的管理"></a>网络切片的管理</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>网络切片是一个端到端的逻辑网络，三个阶段：设计激活、切片运行和切片删除。</p>
+<h3 id="网络切片管理功能"><a href="#网络切片管理功能" class="headerlink" title="网络切片管理功能"></a>网络切片管理功能</h3><ol>
+<li>通信服务管理（Communication Service Management Function,CSMF）可实现业务需求到网络切片需求的映射。</li>
+<li>网络切片管理（Network Slice Management Function,NSMF）可实现NSI的编排管理，并将整个切片的SLA分解为切片子网的SLA。</li>
+<li>网络切片子网管理（Network Slice Subnet Management Function,NSSMF）可实现NSSI的管理和编排，将SLA映射为网络服务实例和配置要求，并将指令下达给MANO执行。</li>
+</ol>
+<h1 id="MEC"><a href="#MEC" class="headerlink" title="MEC"></a>MEC</h1><img src="截屏2022-10-13 20.08.19.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-13 20.08.19" style="zoom:50%;" />
+
+<p>在5G中部署MEC，可以看到中间的UPF负责<strong>牵引用户面流量</strong>到目标MEC应用所在的数据网络。</p>
+<p>MEC业务系统作为5G系统的边缘网络部署在N6参考点上，由UPF负责将边缘网络的流量分发导流到MEC业务系统。基于5G核心网的C&#x2F;U分离式架构，<strong>UPF可以灵活部署到网络边缘的MEC系统</strong>。对MEC而言，UPF是分布式的、可配置的数据平面，在MEC融合部署到5G网络中起到关键性作用。</p>
+<h2 id="监管需求"><a href="#监管需求" class="headerlink" title="监管需求"></a>监管需求</h2><p>合法侦听和数据留存</p>
+<p>针对MEC的情况，建议在SMF和UPF上实施合法侦听和数据留存。综上所述，UPF实际上就是MEC主机的数据平面，因此3GPP规范支持对MEC应用流量的合法侦听和数据留存就像支持任何经过UPF的应用流量一样。具体可以参考已经发布的标准MEC;Support for regulatory requirement。</p>
+<hr>
+<h1 id="5G主要业务场景"><a href="#5G主要业务场景" class="headerlink" title="5G主要业务场景"></a>5G主要业务场景</h1><h2 id="eMBB（增强移动宽带）"><a href="#eMBB（增强移动宽带）" class="headerlink" title="eMBB（增强移动宽带）"></a>eMBB（增强移动宽带）</h2><ol>
+<li>更高数据速率</li>
+<li>更高密度</li>
+<li>部署与覆盖范围</li>
+<li>更高的用户移动性</li>
+<li>数据速率变化很大的设备</li>
+<li>固定移动融合</li>
+<li>家庭基站部署</li>
+</ol>
+<h2 id="关键通信"><a href="#关键通信" class="headerlink" title="关键通信"></a>关键通信</h2><p>3GPP系统在满足关键通信要求方面不尽如人意的主要领域是时延、可靠性和可用性。通过改进的无线电接口、优化的架构以及专用的核心网和无线资源可以满足关键通信领域方面的要求。</p>
+<h3 id="更高可靠性和更低时延"><a href="#更高可靠性和更低时延" class="headerlink" title="更高可靠性和更低时延"></a>更高可靠性和更低时延</h3><p>“更高可靠性和更低时延”应用场景系列的关键特征是对系统可靠性和时延的高要求。在大多数情况下，数据速率是适中的，最重要的是，消息可以快速可靠地传输。</p>
+<h4 id="业务场景4-——虚拟和增强现实中的语音、音频和视频"><a href="#业务场景4-——虚拟和增强现实中的语音、音频和视频" class="headerlink" title="业务场景4 ——虚拟和增强现实中的语音、音频和视频"></a>业务场景4 ——虚拟和增强现实中的语音、音频和视频</h4><p>在该业务场景中，语音通信用于高度交互的环境，例如，多人游戏或虚拟现实会议。参与者的声音必须与环境相关的视觉信息一样可以快速地传播，此要求适用于环境的音频和视频组件，包括编码和解码在内的10ms视频时延要求，它是源于人类的感知（较高的时延可能会使人产生不舒服的感觉）。为了使语音、音频和视频同步，语音和音频的单向时延（包括编码和解码）应该是相似的。<br>增强现实、虚拟现实和三维（Three Dimensional,3D）服务将发挥越来越重要的作用。与当前视频服务（2ms～4 ms往返时延）相比，这些场景对传输带宽（例如，8K立体视频）和时延提出了更高要求，进而提供更好的用户体验。</p>
+<h3 id="更高可用性"><a href="#更高可用性" class="headerlink" title="更高可用性"></a>更高可用性</h3><p>应用场景系列的关键特征是在对可用性的系统要求较高。在大多数情况下，可靠性、数据速率和时延都是适中的，最重要的是覆盖范围足够广。<br>需要这种类型通信的一个典型区域是在传统蜂窝网络拥塞或被损坏，或者其覆盖范围不够广时。附加网络层可以扩大覆盖的范围，例如，通过直接移动点至卫星的链路。</p>
+<h4 id="业务场景：辅助连接"><a href="#业务场景：辅助连接" class="headerlink" title="业务场景：辅助连接"></a>业务场景：辅助连接</h4><p>无线接入正迅速成为访问服务、内容和信息的主要连接模式。更重要的是，无线接入始终可以向用户提供对下一代3GPP系统的访问。尽管无线接入增加了组件的可靠性和内置冗余，但是仍然存在地面网络发生故障导致网络中断和用户失去系统访问的可能。</p>
+<p>例如，在灾难发生期间，确保可靠的辅助连接对用户保持连接是非常重要的。提供这种连接的一种方式是，通过卫星接入实现对3GPP系统的接入。</p>
+<h3 id="关键任务服务"><a href="#关键任务服务" class="headerlink" title="关键任务服务"></a>关键任务服务</h3><p>关键任务服务”应用场景系列涵盖3GPP TR 22.891描述的关键通信，这些业务比网络中的其他业务有更高的优先级，并且需要一些<strong>强制执行</strong>此优先级的方法。</p>
+<p>关键任务通信可能需要比常规业务更高的优先级，因为它用于控制具有非常低的时延或高可靠性要求的设备。当网络过载时，一些其他类型的关键任务通信可能需要更高的优先级。例如，消防员比火灾现场的其他用户具有更高的优先级</p>
+<h4 id="优先通信"><a href="#优先通信" class="headerlink" title="优先通信"></a>优先通信</h4><p>用户和流量可以有不同的优先级，在全系统内提供优先权。优先用户可以更快、更简单的接入；拥塞也不会堵；保证质量；可以动态改变优先级。可以基于当前的网络状态，做出相对优先级决定。</p>
+<h4 id="隔离通信：也是照顾优先级用户"><a href="#隔离通信：也是照顾优先级用户" class="headerlink" title="隔离通信：也是照顾优先级用户"></a>隔离通信：也是照顾优先级用户</h4><p>如果网络中出现了重要流量减慢或者终止的情况，就把优先级用户流量和其他用户的流量隔离开来。</p>
+<h4 id="保证通信"><a href="#保证通信" class="headerlink" title="保证通信"></a>保证通信</h4><p>用户和流量对保证通信有不同的要求。如果网络提供不同级别的弹性、可用性、覆盖范围和可靠性，则可以定制通信的成功率，以满足不同用户和流量的需求。虽然保证通信永远不可能得到充分保证，但是可以提供不同级别的保证，使这种保证接近100%。</p>
+<ul>
+<li>连接可以使用更有效的纠错来降低错误率。</li>
+<li>连接可以使用更高的功率来降低错误率。</li>
+<li>连接可以使用冗余链路来降低错误率。</li>
+<li>连接可以使用专用资源来降低错误率。</li>
+<li>连接可以使用轮流接入技术来增加覆盖范围。</li>
+<li>连接可以使用替代接入技术（例如，卫星接入）来提高可用性。</li>
+<li>设备之间可以直接通信。</li>
+<li>设备可以通过特定的网络基础设施进行通信。</li>
+<li>数据可以通过有效的信道传送（例如，多路广播到大量用户）。</li>
+</ul>
+<hr>
+<h1 id="5G核心网规划"><a href="#5G核心网规划" class="headerlink" title="5G核心网规划"></a>5G核心网规划</h1><h2 id="AMF——接入和移动性管理"><a href="#AMF——接入和移动性管理" class="headerlink" title="AMF——接入和移动性管理"></a>AMF——接入和移动性管理</h2><p>AMF使用AMF Set组网，Set里有多个功能相同的AMF。AMF Set内针对AMF的容量的不同来设置权重因子，实现Set内AMF的<strong>负载均衡</strong>。</p>
+<blockquote>
+<p>动态负载均衡算法：状态信息的收集主要来自系统当前的状态，根据动态获得的节点状态做出决策。这里找到了一个专硕的毕业论文，可以研究研究，还是北邮的。</p>
+</blockquote>
+<h2 id="UDM——通用数据管理"><a href="#UDM——通用数据管理" class="headerlink" title="UDM——通用数据管理"></a>UDM——通用数据管理</h2><p>5G的用户数据库是前后端分离的，前端为UDM、PCF，后端为UDR。</p>
+<p>虽然标准中只规定一个UDR后端，但是现实中是用UDM BE、PCF BE、HSS BE，三种后端。</p>
+<p>前端负责业务逻辑、网元间信令和保存用户和业务的动态数据，后端负责和运营商的IT系统对接。存储静态的用户数据、策略数据。</p>
+<h3 id="网络部署"><a href="#网络部署" class="headerlink" title="网络部署"></a>网络部署</h3><p>在现实生活中，UDM和HSS是融合起来的。</p>
+<h4 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h4><p>对现存的4G网络的HSS进行升级，使其具备proxy功能。从4G基站连上来的5GUE，会被代理到融合UDM&#x2F;HSS。</p>
+<h2 id="PCF和UDM一样"><a href="#PCF和UDM一样" class="headerlink" title="PCF和UDM一样"></a>PCF和UDM一样</h2><h2 id="SMF——会化控制管理"><a href="#SMF——会化控制管理" class="headerlink" title="SMF——会化控制管理"></a>SMF——会化控制管理</h2><p>SMF组网涉及到SMF和UPF的关联。</p>
+<h3 id="一个UPF对应一个SMF"><a href="#一个UPF对应一个SMF" class="headerlink" title="一个UPF对应一个SMF"></a>一个UPF对应一个SMF</h3><p>一个UPF只受一个SMF的控制，但是一个SMF可以连接多个UPF。适合小规模简单业务的场景。</p>
+<h3 id="一个UPF和多个SMF对应"><a href="#一个UPF和多个SMF对应" class="headerlink" title="一个UPF和多个SMF对应"></a>一个UPF和多个SMF对应</h3><p>一个UPF可以收到多个SMF的控制，但是具体到某个PDU会话，就只能由其中一个SMF处理，不同的PDU可以由不同的SMF处理。</p>
+<p>此方式，可以允许SMF组成POOL，UPF可以和POOL内所有SMF全连接，实现<strong>POOL内SMF的负载均衡</strong>！同时方便扩容缩容。</p>
+<h3 id="两种方法的融合–第三种方法"><a href="#两种方法的融合–第三种方法" class="headerlink" title="两种方法的融合–第三种方法"></a>两种方法的融合–第三种方法</h3><p>将核心UPF进行POOL全连接，边缘计算的UPF只和POOL中固定的SMF关联。</p>
+<p>也就是说，核心UPF可以收到所有SMF的控制，边缘计算的UPF只由其中一对SMF控制。</p>
+<h2 id="UPF–用户面控制"><a href="#UPF–用户面控制" class="headerlink" title="UPF–用户面控制"></a>UPF–用户面控制</h2><p>UPF是CUPS分离架构的用户面部分，主要负责数据包（媒体流）的路由和转发、数据包的检测、用户面策略的实施、QoS的执行。</p>
+<p>eMBB场景，核心UPF POOL一般部署在大城市。针对MEC场景，UPF下沉，和MEC紧密关联部署在一起，成为边缘UPF。</p>
+<p>5G网络支持上行链路分类器（Uplink Classifi er,ULCL）和分支点（Branching Point, BP）功能，允许用户的业务流经过多个UPF，即为不用业务设置不同的锚点UPF。例如，对于边缘计算的业务直接由边缘UPF出移动网，对于用户的语音业务，可以由边缘UPF送至核心UPF，再由核心UPF送至IMS网。不同业务场景下UPF的流量路由示意如图5-25所示。<img src="截屏2022-10-14 15.25.37.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-14 15.25.37" style="zoom:50%;" /></p>
+<h2 id="NRF–网络储存"><a href="#NRF–网络储存" class="headerlink" title="NRF–网络储存"></a>NRF–网络储存</h2><p>NRF为各网元提供注册、发现等服务。各NF的具体能力保存到NRF中，向NRF注册其能对外提供的服务，其他网元通过NRF来发现这些服务。类似DNS的功能，对于来自NF的查询，如果成功找到其对应的服务，NRF就返回所查询服务的IP地址。</p>
+<p><strong>能力指标就是出来服务请求的次数</strong></p>
+<h3 id="NRF组网"><a href="#NRF组网" class="headerlink" title="NRF组网"></a>NRF组网</h3><p>NRF为辖区内的网元提供服务，但是如果要访问辖区外的，就需要在NRF之间进行中转。</p>
+<p>所以可以分为：分级组网 和 网状组网</p>
+<img src="截屏2022-10-14 15.37.20.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-14 15.37.20" style="zoom:50%;" />
+
+<img src="截屏2022-10-14 15.37.34.png" srcset="/img/loading.gif" lazyload alt="截屏2022-10-14 15.37.34" style="zoom:50%;" />
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/5G%E6%A0%B8%E5%BF%83%E7%BD%91/" class="category-chain-item">5G核心网</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>《5G核心网规划和应用》笔记</div>
+      <div>https://cant-read.github.io/2022/10/13/5G核心网/《5G核心网规划与应用》/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>ColdBug</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月13日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/12/23/5G%E6%A0%B8%E5%BF%83%E7%BD%91/NWDAF%E6%A0%87%E5%87%86%E8%AE%B0%E5%BD%95/" title="NWDAF标准">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">NWDAF标准</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%A0%91/" title="二叉树">
+                        <span class="hidden-mobile">二叉树</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'cant-read/cant-read.github.io');
+      s.setAttribute('issue-term', 'title');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       猪咪之家<i class="iconfont icon-love"></i>1424498212@qq.com 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/metowolf/Metingjs@1.2/dist/Meting.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
