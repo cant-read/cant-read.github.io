@@ -230,15 +230,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/06/07/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/" target="_self">
-          冒泡排序
+        <a href="/2023/06/11/Golang/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" target="_self">
+          Golang基础语法
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/07/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/11/Golang/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" target="_self">
         <div>
-          冒泡排序时间复杂度$$O(N^2)$$ 排序思路普通版两两比较，将大的数向后排。每次都能将未排序数组的最大值放到数组尾部。 每次j都从头开始向后。 12345678910111213class Solution &#123;public:    vector&lt;int&gt; sortArray(vector&lt;int&gt;&amp; nums) &#123;        int si
+          defer（延迟执行语句）defer 关键词可以让语句在函数返回的时候执行。 一个函数内可以有多个defer，执行顺序是语句出现顺序的逆序。 在实际应用中可以用来释放锁、释放资源等。 defer执行的具体时机在golang语言中，return语句的并非一个原子操作，而是分为两部分。以return x举例：  先对x进行赋值 在这个时机执行defer   执行RET命令  指针类型指针定义方式 va
         </div>
       </a>
 
@@ -246,7 +246,257 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-06-07 19:18" pubdate>
+            <time datetime="2023-06-11 15:14" pubdate>
+              2023-06-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/golang/" class="category-chain-item">golang</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/golang/">#golang</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/06/08/%E7%AE%97%E6%B3%95/leetcode/LC215-%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%AC%20K%20%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0/" target="_self">
+          LC215-数组中的第K个最大元素
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/08/%E7%AE%97%E6%B3%95/leetcode/LC215-%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%AC%20K%20%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0/" target="_self">
+        <div>
+          LC215-数组中的第K个最大元素  思路–选择排序只需要维护前K个元素就好。 12345678910111213141516class Solution &#123;public:    int findKthLargest(vector&lt;int&gt;&amp; nums, int k) &#123;        int s = (nums.size()&lt;k)? k:nums.s
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-06-08 11:51" pubdate>
+              2023-06-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/leetcode/" class="category-chain-item">leetcode</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/leetcode/">#leetcode</a>
+            
+              <a href="/tags/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">#选择排序</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/06/08/%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/" target="_self">
+          选择排序
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/08/%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/" target="_self">
+        <div>
+          选择排序双重循环遍历数组，每经过一轮比较，找到最小元素的下标，将其交换至首位。 从头到尾，挨个摁着数和后面的比，如果有比他小的，就交换。这样嗯着的这个位置的数，就能找到最小的值。 12345678910111213class Solution &#123;public:    vector&lt;int&gt; sortArray(vector&lt;int&gt;&amp; nums) &#12
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-06-08 11:28" pubdate>
+              2023-06-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="category-chain-item">排序算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">#选择排序</a>
+            
+              <a href="/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">#排序算法</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/06/08/%E7%AE%97%E6%B3%95/leetcode/LC283-%E7%A7%BB%E5%8A%A8%E9%9B%B6/" target="_self">
+          LC283-移动零
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/08/%E7%AE%97%E6%B3%95/leetcode/LC283-%E7%A7%BB%E5%8A%A8%E9%9B%B6/" target="_self">
+        <div>
+          LC283-移动零  解题思路冒泡排序，每次移动一个0去最后面。 12345678910111213class Solution &#123;public:    void moveZeroes(vector&lt;int&gt;&amp; nums) &#123;        int flag = true;        for(int i=0;i&lt;nums.size();i++)&#
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-06-08 00:13" pubdate>
+              2023-06-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/leetcode/" class="category-chain-item">leetcode</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/">#冒泡排序</a>
+            
+              <a href="/tags/leetcode/">#leetcode</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/06/07/%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" target="_self">
+          归并排序
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/07/%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" target="_self">
+        <div>
+          归并排序时间复杂度$$O(NlogN)$$ 思想归并 两个有序数组，两根指针。指针所指的数字比较大小，合适的添加到额外空间中，指针后移。 当其中一个数组被比完了，另一个数组直接照抄下来。 注意里面全是等号  123456789101112131415161718void merge(vector&lt;int&gt;&amp; nums, int l, int m, int r) &#123;
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-06-07 20:06" pubdate>
               2023-06-07
             </time>
           </div>
@@ -277,7 +527,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/">#冒泡排序</a>
+              <a href="/tags/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">#归并排序</a>
             
               <a href="/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">#排序算法</a>
             
@@ -293,15 +543,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/06/07/leetcode/LC912-%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/" target="_self">
+        <a href="/2023/06/07/%E7%AE%97%E6%B3%95/leetcode/LC912-%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/" target="_self">
           LC912-排序数组
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/07/leetcode/LC912-%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/07/%E7%AE%97%E6%B3%95/leetcode/LC912-%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84/" target="_self">
         <div>
-          测试我是测试
+          
         </div>
       </a>
 
@@ -309,7 +559,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2023-06-07 19:17" pubdate>
+            <time datetime="2023-06-07 19:13" pubdate>
               2023-06-07
             </time>
           </div>
@@ -325,7 +575,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="category-chain-item">排序算法</a>
+  <a href="/categories/leetcode/" class="category-chain-item">leetcode</a>
   
   
 
@@ -349,6 +599,191 @@
               <a href="/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/">#冒泡排序</a>
             
               <a href="/tags/leetcode/">#leetcode</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/06/07/%E7%AE%97%E6%B3%95/leetcode/%E5%89%91%E6%8C%87Offer45-%E6%8A%8A%E6%95%B0%E7%BB%84%E6%8E%92%E7%A8%8B%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0/" target="_self">
+          剑指Offer45-把数组排最小的数
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/07/%E7%AE%97%E6%B3%95/leetcode/%E5%89%91%E6%8C%87Offer45-%E6%8A%8A%E6%95%B0%E7%BB%84%E6%8E%92%E7%A8%8B%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0/" target="_self">
+        <div>
+          剑指Offer45-把数组排最小的数  解题思路我的想法我的思路是冒泡排序，但是比较的过程需要更改。 我是想用数学方法去比较：  如果位数一样，就直接返回 不一样，就比较第一个数字 第一个数字也一样，比较余数 余数一样大，将整体值小的放到前面    但是这个是错的，余数的情况不能处理好。 官方解法冒泡排序，比较的时候将前一个数a和后一个数b组合成一个新数 ab，然后再交换位置组合 ba，比较 ab
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-06-07 19:13" pubdate>
+              2023-06-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%91%E6%8C%87Offer/" class="category-chain-item">剑指Offer</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%89%91%E6%8C%87Offer/">#剑指Offer</a>
+            
+              <a href="/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%EF%BC%8C%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">#冒泡排序，快速排序</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/06/07/%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" target="_self">
+          二分查找
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/07/%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" target="_self">
+        <div>
+          
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-06-07 19:11" pubdate>
+              2023-06-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/" class="category-chain-item">搜索算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE-%E6%90%9C%E7%B4%A2%E7%AE%97%E6%B3%95/">#二分查找 搜索算法</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/06/06/%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%A0%86/" target="_self">
+          堆
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/06/%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%A0%86/" target="_self">
+        <div>
+          堆定义堆是一个完全二叉树，可以分为大根堆和小根堆。大根堆：在该完全二叉树中，每一个子树的最大值都是头结点的值。 可以用数组去表示树的结构。在数组中序号为 i 的结点关系如下：$$左孩子：2i+1\右孩子：2i+2 \父结点：\frac{i-1}2$$ 将数组转换为大根堆 创建一个数组（能放下全部元素）  创建一个变量 heap_size &#x3D; 0，记录当前堆的大小。  将数字 a 放入数组
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-06-06 18:51" pubdate>
+              2023-06-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="category-chain-item">数据结构</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%A0%86/">#数据结构 堆</a>
             
           </div>
         
@@ -410,389 +845,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/06/05/WebServer/Reactor%E5%92%8CProactor%E6%A8%A1%E5%9E%8B/" target="_self">
-          Reactor和Proactor模型
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/05/WebServer/Reactor%E5%92%8CProactor%E6%A8%A1%E5%9E%8B/" target="_self">
-        <div>
-          Reactor和ProactorIO模型五种IO模型 阻塞 非阻塞 IO复用 信号驱动 异步  同步IO和异步IO的区别一个IO操作一般分为两个部分：  发起IO请求 执行IO操作  而同步&#x2F;异步的最大区别在于：由谁来完成数据从内核态到用户态的拷贝 同步I&#x2F;O阻塞I&#x2F;O以阻塞read()来举例，用户进行执行read()后，就阻塞在此处。直到内核将数据准备好并拷贝到内核
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-06-05 12:12" pubdate>
-              2023-06-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/WebServer/" class="category-chain-item">WebServer</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/06/03/Linux%E7%BC%96%E7%A8%8B/Linux%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" target="_self">
-          Linux网络编程
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/03/Linux%E7%BC%96%E7%A8%8B/Linux%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" target="_self">
-        <div>
-          Linux网络编程基础API字节序字节序就是字节在内存中排列方式，现代PC中大多小端序，主机字节序。 网络中，以大端序作为基准，因此被称为 网络字节序 12345#include＜netinet/in.h＞ unsigned long int htonl(unsigned long int hostlong); unsigned short int htons(unsigned short int
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-06-03 21:04" pubdate>
-              2023-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Linux%E7%BC%96%E7%A8%8B/" class="category-chain-item">Linux编程</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/06/03/Linux%E7%BC%96%E7%A8%8B/Linux%E5%A4%9A%E7%BA%BF%E7%A8%8B/" target="_self">
-          Linux多线程
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/03/Linux%E7%BC%96%E7%A8%8B/Linux%E5%A4%9A%E7%BA%BF%E7%A8%8B/" target="_self">
-        <div>
-          Linux多线程线程概述（PPT）线程和进程是类似的，也是去完成并发任务，一般线程会处理相同的任务。 线程是轻量级的进程，线程之间共享数据很方便。 进程的代价是比较高的，尽管使用了写时复制的技术，但是仍然需要复制多种表。 创建线程1234567891011121314151617一般情况下,main函数所在的线程我们称之为主线程（main线程），其余创建的线程称之为子线程。程序中默认只有一个进程，
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-06-03 21:02" pubdate>
-              2023-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Linux%E7%BC%96%E7%A8%8B/" class="category-chain-item">Linux编程</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/06/03/Linux%E7%BC%96%E7%A8%8B/Linux%E5%A4%9A%E8%BF%9B%E7%A8%8B/" target="_self">
-          Linux多进程
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/03/Linux%E7%BC%96%E7%A8%8B/Linux%E5%A4%9A%E8%BF%9B%E7%A8%8B/" target="_self">
-        <div>
-          Linux多进程程序和进程程序描述如何在运行时创建一个进程。 ![截屏2023-03-31 18.15.17](截屏2023-03-31 18.15.17-1135960.png) 并发和并行  进程控制块PCB    进程的状态转换    进程相关的命令查看进程的指令 ps![截屏2023-04-01 18.42.45](截屏2023-04-01 18.42.45-1135960.png) ST
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-06-03 21:02" pubdate>
-              2023-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Linux%E7%BC%96%E7%A8%8B/" class="category-chain-item">Linux编程</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/06/03/Linux%E7%BC%96%E7%A8%8B/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" target="_self">
-          Linux系统编程
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/06/03/Linux%E7%BC%96%E7%A8%8B/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" target="_self">
-        <div>
-          Linux系统编程GCC工作流程 源代码  预处理器    -E    gcc  main.c -E -o main.i 预处理后的源代码  编译器    -S    gcc  main.i -S -o main.s 汇编代码  汇编器    -c    gcc  main.s -c -o main.o 目标代码  链接器 启动代码、目标代码、库代码、其他目标代码  可执行程序   G++ gcc
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-06-03 21:01" pubdate>
-              2023-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Linux%E7%BC%96%E7%A8%8B/" class="category-chain-item">Linux编程</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/02/27/C++%E9%A1%B9%E7%9B%AE/json%E8%A7%A3%E6%9E%90%E5%99%A8/" target="_self">
-          JSON解析器
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/02/27/C++%E9%A1%B9%E7%9B%AE/json%E8%A7%A3%E6%9E%90%E5%99%A8/" target="_self">
-        <div>
-          测试驱动开发（test-driven development, TDD） 加入一个测试。 运行所有测试，新的测试应该会失败。 编写实现代码。 运行所有测试，若有测试失败回到3。 重构代码。 回到 1  TDD 是先写测试，再实现功能。好处是实现只会刚好满足测试，而不会写了一些不需要的代码，或是没有被测试的代码。 关于断言断言（assertion）是 C 语言中常用的防御式编程方式，减少编程错误。最
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-02-27 17:09" pubdate>
-              2023-02-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/C-%E9%A1%B9%E7%9B%AE/" class="category-chain-item">C++项目</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/12/23/5G%E6%A0%B8%E5%BF%83%E7%BD%91/NWDAF%E6%A0%87%E5%87%86%E8%AE%B0%E5%BD%95/" target="_self">
-          NWDAF标准
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/12/23/5G%E6%A0%B8%E5%BF%83%E7%BD%91/NWDAF%E6%A0%87%E5%87%86%E8%AE%B0%E5%BD%95/" target="_self">
-        <div>
-          NWDAF功能说明NWDAF中包含分析逻辑函数AnLF和模型训练函数MTLF。AnLF功能为执行推理，导出分析结果。MTLF用于训练机器学习模型和提供已经训练好的模型。NWDAF不需了解其他网元的工作逻辑，只需要订阅其数据即可。 NWDAF的发现和选择 6.3.13 of TS 23.501 [2].  存储在NRFNWDAF中可以包含其中一个或两个都有。有AnLF的NWDAF会在本地保存含有MT
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-12-23 19:55" pubdate>
-              2022-12-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/5G%E6%A0%B8%E5%BF%83%E7%BD%91/" class="category-chain-item">5G核心网</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
